@@ -40,7 +40,7 @@ var HTMLprojectStart = '<div class="project-entry"></div>';
 var HTMLprojectTitle = '<a href="#">%data%</a>';
 var HTMLprojectDates = '<div class="date-text">%data%</div>';
 var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
+var HTMLprojectImage = '<img src="%data%" class="projectpic">';
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
 var HTMLschoolName = '<a href="#">%data%';
@@ -104,6 +104,7 @@ Start here! initializeMap() is called when page is loaded.
 function initializeMap() {
 
   var locations;
+  var locationDetails;
 
   var mapOptions = {
     disableDefaultUI: false
@@ -122,20 +123,28 @@ function initializeMap() {
 
     // initializes an empty array
     var locations = [];
+    var detail;
+    locationDetails = [];
 
     // adds the single location property from bio to the locations array
     locations.push(bio.contacts.location);
+    detail = bio.contacts.location +  "%" + "Home Location" + "%" + " " + "%" + bio.locationPic;
+    locationDetails.push(detail);
 
     // iterates through school locations and appends each location to
     // the locations array
     for (var school in education.schools) {
       locations.push(education.schools[school].location);
+      detail = education.schools[school].location +  "%" + education.schools[school].name + "%" + education.schools[school].url + "%" + education.schools[school].schoolPic;
+      locationDetails.push(detail);
     }
 
     // iterates through work locations and appends each location to
     // the locations array
     for (var job in work.jobs) {
       locations.push(work.jobs[job].location);
+      detail = work.jobs[job].location + "%" +  work.jobs[job].employer + "%" + work.jobs[job].employerURL + "%" +  work.jobs[job].employerPic;
+      locationDetails.push(detail);
     }
 
     return locations;
@@ -153,26 +162,21 @@ function initializeMap() {
     var lon = placeData.geometry.location.lng();  // longitude from the place service
     var name = placeData.formatted_address;   // name of the place from the place service
     var bounds = window.mapBounds;            // current boundaries of the map window
-   /* var name = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-      'sandstone rock formation in the southern part of the '+
-      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-      'south west of the nearest large town, Alice Springs; 450&#160;km '+
-      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-      'Aboriginal people of the area. It has many springs, waterholes, '+
-      'rock caves and ancient paintings. Uluru is listed as a World '+
-      'Heritage Site.</p>'+
-      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-      '(last visited June 22, 2009).</p>'+
-      '</div>'+
-      '</div>';*/
+    var popString;
+
+    for(details in locationDetails)
+    {
+      var arr = locationDetails[details].split("%");
+      if(arr[0] === placeData.formatted_address){
+        popString = '<div id ="marker-content">' +
+        '</div>' +
+        '<p class="map-location-name">'+ arr[1] + '</p>'+
+        '<p class="map-address">' + arr[0] + '</p>' +
+        '<a href="'+ arr[2] + '">' +
+        '<img class="location-image" src="' + arr[3] + '"alt="Location image">' +
+        '</a>';
+      }
+    }
 
     // marker is an object with additional data about the pin for a single location
     var marker = new google.maps.Marker({
@@ -185,7 +189,7 @@ function initializeMap() {
     // or hover over a pin on a map. They usually contain more information
     // about a location.
     var infoWindow = new google.maps.InfoWindow({
-      content: name
+      content: popString
     });
 
     // hmmmm, I wonder what this is about...

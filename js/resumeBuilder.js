@@ -7,11 +7,12 @@ var bio = {
 		"email" : "vartika.bhati@gmail.com",
 		"github" : "vbhati",
 		"twitter" : "@vbhati",
-		"location" : "Santa Clara, CA"
+		"location" : "Santa Clara, CA, USA"
 	},
 	"welcomeMessage" : "Seeking a full-time position in the area of Fontend Web Development.",
 	"skills" : ["JavaScript" ,"HTML/HTML5","CSS","JSON","Java","Spring","Hibernate","MySql"],
-	"biopic" : "images/me.jpg"
+	"biopic" : "images/me.jpg",
+	"locationPic" : "images/santaclara.jpg"
 };
 
 bio.display = function()
@@ -64,7 +65,8 @@ var education = {
 			"degree" : "Masters",
 			"majors" : "Software Engineering",
 			"dates" : "December, 2008",
-			"url" : "http://cmpe.sjsu.edu/"
+			"url" : "http://cmpe.sjsu.edu/",
+			"schoolPic": "images/sjsu.jpg"
 		},
 		{
 			"name" : "Rajasthan University",
@@ -72,7 +74,8 @@ var education = {
 			"degree" : "Post Graduate",
 			"majors" : "Computer Applications",
 			"dates" : "December, 2006",
-			"url" : "http://www.uniraj.ac.in/"
+			"url" : "http://www.uniraj.ac.in/",
+			"schoolPic": "images/rajuniversity.jpg"
 		}
 	],
 	"onlineCourses" : [
@@ -140,10 +143,11 @@ var work = {
 	{
 		"employer" : "E*Trade Financial",
 		"title" : "Staff Software Engineer",
-		"location" : "Menlo Park, CA",
+		"location" : "Menlo Park, CA, USA",
 		"dates" : "August, 2009 - March, 2014",
 		"description" : "Worked as a Software Engineer in the area of Reporting for Equity Edge Online (EEO) a Stock Plan Administration application.",
-		"employerURL" : "https://us.etrade.com/e/t/corporateservices"
+		"employerURL" : "https://us.etrade.com/e/t/corporateservices",
+		"employerPic" : "images/etrade.jpg"
 	}
 ]};
 
@@ -169,46 +173,60 @@ work.display = function(){
 var projects = {
 	"projects" : [
 	{
+		"title" : "Plan-It & Go",
+		"dates" : "2014",
+		"description" : "Designed a website Plan-It & Go that allows user to search for upcoming events and adventures in a given location. It provides different categories to search for, e.g. Family, Friends, Luxury, etc.",
+		"images" : ["images/planitandgo1.jpg","images/planitandgo2.jpg"],
+		"url" : "http://plan-itandgo.appspot.com/index.html"
+	},
+	{
 		"title" : "Grant Level Taxation",
 		"dates" : "2013-2014",
 		"description" : "Designed and developed new view for Dividend Summary report that lists the detailed dividend calculation for grants.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Report Framework Performance",
 		"dates" : "2013",
 		"description" : "Improved Report Framework performance by splitting table and index creation logic when using SQL.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Performance Shares",
 		"dates" : "2012",
 		"description" : "Modified existing EEO reports to incorporate new feature related to Performance Shares.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Report Template",
 		"dates" : "2011-2012",
 		"description" : "Designed and developed Report Template functionality that allows user to customize  their custom and standard reports.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Production Support",
 		"dates" : "2010-2014",
 		"description" : "Handled and resolved numerous production issues/escalations.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Saved Filters",
 		"dates" : "2009-2010",
 		"description" : "Implemented “Saved Filters” feature for EEO as part of New Hire Training that allows user to customize and save the searches. Utilized JavaScript, AJAX and HTML markup to create, edit and manage filters.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	},
 	{
 		"title" : "Minor Projects",
 		"dates" : "2010-2014",
 		"description" : "Worked on multiple minor porjects: WAO Report Enhancement, Client File Automation, Logging Enhancement and MetaData Enhancement.",
-		"images" : []
+		"images" : [],
+		"url" : "#"
 	}
 ]};
 
@@ -216,16 +234,19 @@ var projects = {
 projects.display = function(){
 	for(var project in projects.projects){
 		$("#projects").append(HTMLprojectStart);
-		var formattedProjectTitle = HTMLprojectTitle.replace("%data%",projects.projects[project].title);
+		var formattedURL = HTMLprojectTitle.replace("#",projects.projects[project].url);
+		var formattedProjectTitle = formattedURL.replace("%data%",projects.projects[project].title);
 		var formattedProjectDate = HTMLprojectDates.replace("%data%",projects.projects[project].dates);
 		var formattedDescription = HTMLprojectDescription.replace("%data%",projects.projects[project].description);
 		$(".project-entry:last").append(formattedProjectTitle);
 		$(".project-entry:last").append(formattedProjectDate);
 		$(".project-entry:last").append(formattedDescription);
 
-		if(projects.projects[project].images > 0){
-			var formattedImage = HTMLprojectImage.replace("%data%",projects.projects[project].images);
-			$(".project-entry:last").append(formattedImage);
+		if(projects.projects[project].images.length > 0){
+			for(image in projects.projects[project].images){
+				var formattedImage = HTMLprojectImage.replace("%data%",projects.projects[project].images[image]);
+				$(".project-entry:last").append(formattedImage);
+			}
 		}
 	}
 };

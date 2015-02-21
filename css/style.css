@@ -223,3 +223,25 @@ span {
     display: block;
   }
 }
+
+.projectpic {
+  padding: 10px;
+  width: 400px;
+}
+
+
+.map-location-name {
+  font-style: italic;
+  color: #F5A623;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+.map-address {
+  color: #999999;
+}
+
+.location-image {
+  height: 100px;
+  width: 150px;
+}
