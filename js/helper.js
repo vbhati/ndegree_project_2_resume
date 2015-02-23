@@ -1,16 +1,9 @@
 /*
-
-This file contains all of the code running in the background that makes resumeBuilder.js possible. We call these helper functions because they support your code in this course.
-
-Don't worry, you'll learn what's going on in this file throughout the course. You won't need to make any changes to it until you start experimenting with inserting a Google Map in Problem Set 3.
-
-Cameron Pittman
+This file contains all of the code running in the background that makes resumeBuilder.js possible.
 */
 
-
 /*
-These are HTML strings. As part of the course, you'll be using JavaScript functions
-replace the %data% placeholder text you see in them.
+These are HTML strings. JavaScript functions (resumeBuilder.js) are used to replace the %data% placeholder.
 */
 var HTMLheaderName = '<h1 id="name">%data%</h1>';
 var HTMLheaderRole = '<span>%data%</span><hr/>';
@@ -60,7 +53,7 @@ var googleMap = '<div id="map"></div>';
 
 
 /*
-The International Name challenge in Lesson 2 where you'll create a function that will need this helper code to run. Don't delete! It hooks up your code to the button you'll be appending.
+The International Name challenge.
 */
 $(document).ready(function() {
   $('button').click(function() {
@@ -70,7 +63,7 @@ $(document).ready(function() {
 });
 
 /*
-The next few lines about clicks are for the Collecting Click Locations quiz in Lesson 2.
+Function to collect click locations on screen.
 */
 clickLocations = [];
 
@@ -91,8 +84,7 @@ $(document).click(function(loc) {
 
 
 /*
-This is the fun part. Here's where we generate the custom Google Map for the website.
-See the documentation below for more details.
+Code to generate custom Google Map for the website.
 https://developers.google.com/maps/documentation/javascript/reference
 */
 var map;    // declares a global map variable
@@ -110,14 +102,14 @@ function initializeMap() {
     disableDefaultUI: false
   };
 
-  // This next line makes `map` a new Google Map JavaScript Object and attaches it to
-  // <div id="map">, which is appended as part of an exercise late in the course.
+  // This next line makes `map` a new Google Map JavaScript Object and attaches it to <div id="map">
   map = new google.maps.Map(document.querySelector('#map'), mapOptions);
 
 
   /*
   locationFinder() returns an array of every location string from the JSONs
-  written for bio, education, and work.
+  written for bio, education, and work. It also populates the location details
+  to locationDetails object.
   */
   function locationFinder() {
 
@@ -128,11 +120,12 @@ function initializeMap() {
 
     // adds the single location property from bio to the locations array
     locations.push(bio.contacts.location);
+    // adds location name, url if any to locationDetails array
     detail = bio.contacts.location +  "%" + "Home Location" + "%" + " " + "%" + bio.locationPic;
     locationDetails.push(detail);
 
     // iterates through school locations and appends each location to
-    // the locations array
+    // the locations array also adds details to locationDetails array
     for (var school in education.schools) {
       locations.push(education.schools[school].location);
       detail = education.schools[school].location +  "%" + education.schools[school].name + "%" + education.schools[school].url + "%" + education.schools[school].schoolPic;
@@ -140,7 +133,7 @@ function initializeMap() {
     }
 
     // iterates through work locations and appends each location to
-    // the locations array
+    // the locations array also adds details to locationDetails array
     for (var job in work.jobs) {
       locations.push(work.jobs[job].location);
       detail = work.jobs[job].location + "%" +  work.jobs[job].employer + "%" + work.jobs[job].employerURL + "%" +  work.jobs[job].employerPic;
@@ -160,14 +153,13 @@ function initializeMap() {
     // The next lines save location data from the search result object to local variables
     var lat = placeData.geometry.location.lat();  // latitude from the place service
     var lon = placeData.geometry.location.lng();  // longitude from the place service
-    var name = placeData.formatted_address;   // name of the place from the place service
     var bounds = window.mapBounds;            // current boundaries of the map window
     var popString;
 
-    for(details in locationDetails)
-    {
+    //constructs html to be displayed in infoWindow with location name, address, image and url
+    for(details in locationDetails) {
       var arr = locationDetails[details].split("%");
-      if(arr[0] === placeData.formatted_address){
+      if(arr[0] === placeData.formatted_address) {
         popString = '<div id ="marker-content">' +
         '</div>' +
         '<p class="map-location-name">'+ arr[1] + '</p>'+
@@ -251,10 +243,6 @@ function initializeMap() {
   pinPoster(locations);
 
 }
-
-/*
-Uncomment the code below when you're ready to implement a Google Map!
-*/
 
 // Calls the initializeMap() function when the page loads
 window.addEventListener('load', initializeMap);

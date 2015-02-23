@@ -224,9 +224,16 @@ span {
   }
 }
 
+@media only screen and (min-width: 300px) {
+ .projectpic {
+    padding: 2px;
+    width: 100px;
+  }
+}
+
 .projectpic {
   padding: 10px;
-  width: 400px;
+  width: 250px;
 }
 
 

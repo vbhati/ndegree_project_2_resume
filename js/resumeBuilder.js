@@ -15,8 +15,7 @@ var bio = {
 	"locationPic" : "images/santaclara.jpg"
 };
 
-bio.display = function()
-{
+bio.display = function() {
 	var formattedHeaderName = HTMLheaderName.replace("%data%",bio.name);
 	var formattedHeaderRole = HTMLheaderRole.replace("%data%",bio.role);
 	$("#header").prepend(formattedHeaderRole);
@@ -38,11 +37,9 @@ bio.display = function()
 	$("#header").append(formattedBioPic);
 	$("#header").append(formattedWelcomeMsg);
 
-	if(bio.skills.length > 0)
-	{
+	if(bio.skills.length > 0) {
 		$("#header").append(HTMLskillsStart);
-		for(var i = 0 ; i < bio.skills.length ; i++)
-		{
+		for(var i = 0 ; i < bio.skills.length ; i++) {
 			var formattedSkill = HTMLskills.replace("%data%",bio.skills[i]);
 			$("#header").append(formattedSkill);
 		}
@@ -80,28 +77,34 @@ var education = {
 	],
 	"onlineCourses" : [
 		{
+			"title" : "Responsive Web Design",
+			"school" : "Udacity",
+			"date" : "February, 2015",
+			"url" : "https://www.udacity.com/course/ud893"
+		},
+		{
 			"title" : "Intro to HTML and CSS",
 			"school" : "Udacity",
 			"date" : "February, 2015",
-			"url" : "https://www.udacity.com/nanodegree"
+			"url" : "https://www.udacity.com/course/ud304"
 		},
 		{
 			"title" : "JavaScript Basics",
 			"school" : "Udacity",
 			"date" : "February, 2015",
-			"url" : "https://www.udacity.com/nanodegree"
+			"url" : "https://www.udacity.com/course/ud804"
 		},
 		{
 			"title" : "Intro to jQuery",
 			"school" : "Udacity",
 			"date" : "February, 2015",
-			"url" : "https://www.udacity.com/nanodegree"
+			"url" : "https://www.udacity.com/course/ud245"
 		}
 	]
 };
 
-education.display = function(){
-	for(var school in education.schools){
+education.display = function() {
+	for(var school in education.schools) {
 		$("#education").append(HTMLschoolStart);
 		var formattedurl = HTMLschoolName.replace("#",education.schools[school].url);
 		var formattedSchoolName = formattedurl.replace("%data%",education.schools[school].name);
@@ -117,10 +120,9 @@ education.display = function(){
 		$(".education-entry:last").append(formattedLocation);
 	}
 
-	if(education.onlineCourses.length > 0)
-	{
+	if(education.onlineCourses.length > 0) {
 		$("#education").append(HTMLonlineClasses);
-		for(var onlinecourse in education.onlineCourses){
+		for(var onlinecourse in education.onlineCourses) {
 			$("#education").append(HTMLschoolStart);
 			var formattedTitleURL = HTMLonlineTitle.replace("#",education.onlineCourses[onlinecourse].url);
 			var formattedName = formattedTitleURL.replace("%data%",education.onlineCourses[onlinecourse].title);
@@ -151,8 +153,8 @@ var work = {
 	}
 ]};
 
-work.display = function(){
-	for(var job in work.jobs){
+work.display = function() {
+	for(var job in work.jobs) {
 		$("#workExperience").append(HTMLworkStart);
 		var formattedEmployerUrl = HTMLworkEmployer.replace("#",work.jobs[job].employerURL);
 		var formattedEmployer = formattedEmployerUrl.replace("%data%",work.jobs[job].employer);
@@ -231,8 +233,8 @@ var projects = {
 ]};
 
 
-projects.display = function(){
-	for(var project in projects.projects){
+projects.display = function() {
+	for(var project in projects.projects) {
 		$("#projects").append(HTMLprojectStart);
 		var formattedURL = HTMLprojectTitle.replace("#",projects.projects[project].url);
 		var formattedProjectTitle = formattedURL.replace("%data%",projects.projects[project].title);
@@ -242,9 +244,9 @@ projects.display = function(){
 		$(".project-entry:last").append(formattedProjectDate);
 		$(".project-entry:last").append(formattedDescription);
 
-		if(projects.projects[project].images.length > 0){
-			for(image in projects.projects[project].images){
-				var formattedImage = HTMLprojectImage.replace("%data%",projects.projects[project].images[image]);
+		if(projects.projects[project].images.length > 0) {
+			for(var i = 0 ; i < projects.projects[project].images.length ; i++) {
+				var formattedImage = HTMLprojectImage.replace("%data%",projects.projects[project].images[i]);
 				$(".project-entry:last").append(formattedImage);
 			}
 		}
